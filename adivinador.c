@@ -4,6 +4,7 @@
 
 #define MAX 1000
 #define TRUE 1
+#define FALSE 0
 
 char array(char s[]); //Prototipo.
 void gotoxy(int x, int y);
@@ -23,25 +24,40 @@ int main(void){
   gotoxy(2,2); for(col=0; col < 70; col++) printf(" ");
   printf("\n");
 
-  system("/bin/stty raw"); //Ejecución de System().
-  while((c=getchar())!= '.') {
-    i += 1;
-    save[i] = c;    //Recolleción de caracteres a un arreglo.
-    printf("%c",inv[i]);
-  }
-
   system("/bin/stty raw");
-  while((d=getchar())!= '.') { //texto de "humo".
-    printf("%c", d);
+  c = getchar();
+  if(c == '1'){
+    system("/bin/stty raw"); //Ejecución de System().
+    while((c=getchar())!= '.') {
+      i += 1;
+      save[i] = c;    //Recolleción de caracteres a un arreglo.
+      printf("%c",inv[i]);
   }
 
-  printf("\t\t");
-  array(save); //Llamada y parametrización.
-  printf("\n\n");
+    system("/bin/stty raw");
+    while((d=getchar())!= '.') { //texto de "humo".
+      printf("%c", d);
+  }
 
-  system("/bin/stty cooked"); 
-  printf("\n");
-  return 0;
+    printf("\t\t");
+    array(save); //Llamada y parametrización.
+    printf("\n\n");
+
+    system("/bin/stty cooked"); 
+    printf("\n");
+  }
+
+  else {
+  
+    printf("Tu no eres digno de hablar con Huitzilopochtli >:V\n");
+    system("/bin/stty cooked");
+    printf("\n");
+  }
+
+  //system("/bin/stty cooked");
+  
+  return 0; 
+
 }
 
 //Impresión Básica de un Arreglo.
