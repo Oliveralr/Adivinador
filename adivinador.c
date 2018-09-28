@@ -1,6 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h> //Librería para system()
+#include <stdlib.h> //Biblioteca para system()
 #include <string.h>
+#include <unistd.h> // Si, es parte del ANSI.
+
 
 #define MAX 1000
 #define TRUE 1
@@ -10,21 +12,23 @@ char array(char s[]); //Prototipo.
 void core();
 void gotoxy(int x, int y);
 
-void gotoxy(int x, int y){
-  printf("%c[%d;%df",0x1B,y,x); //Dirección a la que apunta gotoxy() en la terminal.
+//Dirección a la que apunta gotoxy() en la terminal.
+void gotoxy(int x, int y)
+{
+        printf("%c[%d;%df",0x1B,y,x);
 }
+
+/* Esta función funcionará en terminales ANSI que además respeten el
+ * estándar POSIX, funcionará en todos los sitemas operativos ya que
+ * ANSI soporta las secuencias de escape*/
+
+
 
 
 //Estructura principal del código.
 int main(void){
   char k;
-  int col;
 
-  //Estos gotoxy limpian la barra de comandos, dejando la terminal limpia.
-  gotoxy(1,1); for(col=0; col < 100; col++) printf(" ");
-  printf("\n");
-  gotoxy(2,2); for(col=0; col < 100; col++) printf(" ");
-  printf("\n");
 
   system("/bin/stty raw");
   char r = getchar();
