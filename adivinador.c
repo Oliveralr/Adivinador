@@ -6,6 +6,10 @@
 
 #define MAX 1000
 
+//uso redundante de booleanos
+//lo usaré para explicar como funcionan en C
+bool verdadero = true;
+bool falso = false;
 
 char array(char s[]); //Prototipo.
 void core();
@@ -56,8 +60,8 @@ int main()
                 }while(k != '2');
                 core();
         }
-
         printf("\n");
+
 return 0;
 }
 
@@ -68,37 +72,41 @@ char array(char s[]){
         for(k = 0; k < len; k++){
                 printf("%c",s[k]);
         }
-  return TRUE;
+  return verdadero;
 }
 
 //Funcionamiento Principal
 void core()
 {
-  //Arreglos uno con el mensaje a pantalla y otro vacío.
-  char inv[MAX] = {"Oh gran Huitzilopochtli dime: "}, save[MAX];
-  int c,d, i = -1, j = 0;
-  char q[] = {"\U0001F61C \U0001F61C \U0001F61C"};
+        //Arreglos uno con el mensaje a pantalla y otro vacío.
+        char inv[MAX] = {"Oh gran Huitzilopochtli dime: "}, save[MAX];
+        int c,d, i = -1;
+        char q[] = {"\U0001F61C \U0001F61C \U0001F61C"};
 
-  system("/bin/stty raw"); //Ejecución de System().
-  while((c=getchar())!= '.') {
-    i += 1;
-    save[i] = c;    //Recolleción de caracteres a un arreglo.
-    printf("%c",inv[i]);
-  }
+        system("/bin/stty raw"); //Ejecución de System().
 
-  system("/bin/stty raw");
-  while((d=getchar())!= '.') { //texto de "humo".
-    printf("%c", d);
-  }
+        while((c=getchar())!= '.') {
+                i += 1;
+                save[i] = c;    //Recolección de caracteres a un arreglo.
+                printf("%c",inv[i]);
+        }
 
-  printf("\n\n\r");
-  array(save); //Llamada y parametrización.
-  int l, large = strlen(q);
-  for(l = 0; l < large; l++){ //Impresión del Emoji.
-    printf("%c", q[l]);
-  }
-  printf("\n\n");
+        system("/bin/stty raw");
 
-  system("/bin/stty cooked");
-  printf("\n\r");
+        while((d=getchar())!= '.') { //texto de "humo".
+                printf("%c", d);
+        }
+
+        printf("\n\n\r");
+        array(save); //Llamada y parametrización.
+        int l, large = strlen(q);
+
+        for(l = 0; l < large; l++){ //Impresión del Emoji.
+                printf("%c", q[l]);
+        }
+
+        printf("\n\n");
+
+        system("/bin/stty cooked");
+        printf("\n\r");
 }
