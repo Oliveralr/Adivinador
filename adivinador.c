@@ -2,11 +2,10 @@
 #include <stdlib.h> //Biblioteca para system()
 #include <string.h>
 #include <unistd.h> // Si, es parte del ANSI.
-
+#include <stdbool.h> // ANSI C99 para definir booleanos
 
 #define MAX 1000
-#define TRUE 1
-#define FALSE 0
+
 
 char array(char s[]); //Prototipo.
 void core();
@@ -22,42 +21,53 @@ void gotoxy(int x, int y)
  * estándar POSIX, funcionará en todos los sitemas operativos ya que
  * ANSI soporta las secuencias de escape*/
 
-
+void clear_screen()
+{
+        const char *clear_screen_ansi = "\e[1;1H\e[2J";
+        write(STDOUT_FILENO, clear_screen_ansi, 12);
+}
 
 
 //Estructura principal del código.
-int main(void){
-  char k;
+int main()
+{
+        char k;
 
+        clear_screen();
+        // printf("\e[1;1H\e[2J");
 
-  system("/bin/stty raw");
-  char r = getchar();
-  if(r == '1'){
-    core();
+        system("/bin/stty raw");
 
-  }else{
+        char r = getchar();
+        if(r == '1') {
+                core();
+        }else{
+                //No más de 3 niveles de sangría, de lo contrario el
+                //código está mal.
+                do{
+                        // Corte del mensaje, para respetar la terminal
+                        // ANSI de 80 x 24.
+                        printf("No eres digno de hablar con\
+                                Huitzilopochtli >:V\n\r\n");
 
-    do{
-      printf("Tu no eres digno de hablar con Huitzilopochtli >:V\n\r\n");
-      system("/bin/stty raw");
-      k=getchar();
+                        system("/bin/stty raw");
+                        k=getchar();
 
-    }while(k != '2');
+                }while(k != '2');
+                core();
+        }
 
-    core();
-  }
-
-  printf("\n");
-  return 0;
+        printf("\n");
+return 0;
 }
 
 //Impresión Básica de un Arreglo.
 char array(char s[]){
-  int k, len = strlen(s);
+        int k, len = strlen(s);
 
-  for(k = 0; k < len; k++){
-    printf("%c",s[k]);
-  }
+        for(k = 0; k < len; k++){
+                printf("%c",s[k]);
+        }
   return TRUE;
 }
 
